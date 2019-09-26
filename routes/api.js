@@ -27,6 +27,7 @@ router.get('/tasks', passport.authenticate('jwt', { session: false }), Task.fetc
 router.put('/task/:id', passport.authenticate('jwt', { session: false }), Task.updateTask);
 router.patch('/task/:id/status', passport.authenticate('jwt', { session: false }), Task.updateStatus);
 router.delete('/task/:id', passport.authenticate('jwt', { session: false }), Task.deleteTask);
+router.get('/dashboard', passport.authenticate('jwt', { session: false }), Task.dashboard);
 /***********************
   Task Routes
 ***********************/

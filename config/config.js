@@ -7,7 +7,7 @@ CONFIG.db_user = process.env.DB_USER || 'postgres';
 CONFIG.db_password = process.env.DB_PASSWORD || 'postgres';
 
 const knex = require('knex')({
-    client: 'mysql',
+    client: 'pg',
     connection: {
         host: CONFIG.db_host,
         user: CONFIG.db_user,

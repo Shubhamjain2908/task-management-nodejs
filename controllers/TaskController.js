@@ -58,7 +58,22 @@ const deleteTask = async (req, res) => {
         return badRequestError(res, 'No task exists with this Id');
     }
     await QUERY.del();
-    return successResponse(res, 200, null, 'Deleted!!!');
+    return noContentResponse(res, 'Deleted!!!');
+}
+
+const dashboard = async (req, res) => {
+    const userId = req.user.id;
+    const totalTask = await Task.query().where('userId', userId).count().then(c => c[0].count);
+    const totalCompletedTask = await Task.query().where('userId', userId).andWhere('status', 'DONE').count().then(c => c[0].count);
+    const totalPendingTask = await Task.query().where('userId', userId).andWhere('status', 'ON').count().then(c => c[0].count);
+    const totalInprogressTask = await Task.query().where('userId', userId).andWhere('status', 'INPROGRESS').count().then(c => c[0].count);
+    const data = {
+        totalTask,
+        totalCompletedTask,
+        totalInprogressTask,
+        totalPendingTask
+    }
+    return successResponse(res, 200, data, 'Successfully get');
 }
 
 module.exports = {
@@ -66,5 +81,6 @@ module.exports = {
     fetchTasks,
     updateTask,
     updateStatus,
-    deleteTask
+    deleteTask,
+    dashboard
 }
