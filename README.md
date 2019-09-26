@@ -1,5 +1,5 @@
-# Twitter-node
-A twitter clone Node application is an attempt to clone some of the functionalities of twitter.
+# ToDo-node
+A todo Node application is an attempt to create a task management application.
 By providing REST API endpoints in it.
 
 The api's are written in [NodeJS](https://nodejs.org/en/).
