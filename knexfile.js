@@ -3,7 +3,7 @@ const production = require('./config/config.js').production;
 
 module.exports = {
   local: {
-    client: 'pg',
+    client: 'mysql',
     useNullAsDefault: true,
     connection: {
       host: '127.0.0.1',
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   development: {
-    client: 'pg',
+    client: 'mysql',
     useNullAsDefault: true,
     connection: {
       host: development.host,
@@ -25,7 +25,7 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'mysql',
     connection: {
       host: production.host,
       user: production.username,
