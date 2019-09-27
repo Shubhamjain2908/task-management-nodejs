@@ -88,7 +88,7 @@ const changePassword = async (req, res) => {
     return badRequestError(res, 'Incorrect old password');
   }
   let err, updated_user;
-  [err, updated_user] = await to(User.query().updateAndFetch({ password: data.newPassword }));
+  [err, updated_user] = await to(User.query().patchAndFetchById(user.id, { password: data.newPassword }));
   if (err) return badRequestError(res, err.message);
   return okResponse(res, updated_user, "Password changed Successfully");
 }
