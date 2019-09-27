@@ -22,9 +22,9 @@ const fetchTasks = async (req, res) => {
 
 const updateTask = async (req, res) => {
     const id = req.params.id;
-    const taskExists = await Task.query().where('id', id);
+    const taskExists = await Task.query().where('id', id).andWhere('userId', req.user.id);
     if (!taskExists) {
-        return badRequestError(res, 'No task exists with this Id');
+        return badRequestError(res, 'No task exists with this Id or the task does not belong to this user!');
     }
     let updatedData = await Task.query().patchAndFetchById(id, req.body);
     return okResponse(res, updatedData);
@@ -38,9 +38,9 @@ const updateStatus = async (req, res) => {
     status = status.toUpperCase();
     if (status === 'ON' || status === 'INPROGRESS' || status === 'DONE') {
         const id = req.params.id;
-        const taskExists = await Task.query().where('id', id);
+        const taskExists = await Task.query().where('id', id).andWhere('userId', req.user.id);
         if (!taskExists) {
-            return badRequestError(res, 'No task exists with this Id');
+            return badRequestError(res, 'No task exists with this Id or the task does not belong to this user!');
         }
         let updatedData = await Task.query().patchAndFetchById(id, { status: status });
         return okResponse(res, updatedData);
@@ -52,10 +52,10 @@ const updateStatus = async (req, res) => {
 
 const deleteTask = async (req, res) => {
     const id = req.params.id;
-    let QUERY = Task.query().where('id', id);
+    let QUERY = Task.query().where('id', id).andWhere('userId', req.user.id);
     const taskExists = await QUERY;
     if (!taskExists) {
-        return badRequestError(res, 'No task exists with this Id');
+        return badRequestError(res, 'No task exists with this Id or the task does not belong to this user!');
     }
     await QUERY.del();
     return noContentResponse(res, 'Deleted!!!');
